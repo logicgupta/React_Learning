@@ -1,7 +1,24 @@
 import React, { Component, useState } from 'react';
 import './App.css';
-import Radium,{StyleRoot} from 'radium'
-import Person from './Person/Person';
+import Styled from 'styled-components'
+
+import Person from './Person/Person'
+
+                // We use nomal css styling to Style the components in syled-component
+                const StyleButton=Styled.button`
+                background-color:${props=>props.alt ?'green':'red'};
+                color:white;
+                font:inherit;
+                border:2px solid blue;
+                padding:8px;
+                cursor:pointer;
+                &:hover{
+                      background-color:${props=>props.alt ?'salmon':'lightgreen'};
+                      color:black;
+                }
+          `;
+            
+
 
 
 class App extends Component {
@@ -64,19 +81,8 @@ class App extends Component {
 
 
   render() {
-
-    const style={
-      backgroundColor:'green',
-      color:'white',
-      font:'inherit',
-      border:'2px solid blue',
-      padding:'8px',
-      cursor:'pointer',
-      ':hover':{
-            backgroundColor:'lightgreen',
-            color:'black'
-      }
-    }
+    
+  
 
     let persons=null
 
@@ -107,11 +113,7 @@ class App extends Component {
         })
       }
     </div>)
-    style.backgroundColor='red'
-    style[':hover']={
-        backgroundColor:'salmon',
-        color:'black'
-    }
+   
 
     }
 
@@ -119,25 +121,26 @@ class App extends Component {
 
 
     return (
-      <StyleRoot>
+      
       <div className="App">
         <h1 >Hi, I'm a React App</h1>
         <p className={classes.join(' ')}>This is really working!</p>
         <p >This is really working!</p>
-        <button 
-        style={style}
-        onClick={this.onToggleListener}>Toggle Element</button>
+        <StyleButton  
+        alt={this.state.visible}
+        onClick={this.onToggleListener}
+        >Toggle Element</StyleButton>
        
         {persons}
 
       </div>
-      </StyleRoot>
+     
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
-export default Radium(App);
+export default App;
 
 //  Hooks      ------> useState
 
