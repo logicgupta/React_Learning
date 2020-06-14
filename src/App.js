@@ -1,9 +1,8 @@
 import React, { Component, useState } from 'react';
 import './App.css';
+import Radium,{StyleRoot} from 'radium'
 import Person from './Person/Person';
-import InputUser from './InputUser/InputUser'
-import OutputUser from './OutputUser/OutputUser'
-import person from './Person/Person';
+
 
 class App extends Component {
   state = {
@@ -61,6 +60,9 @@ class App extends Component {
       console.log('Hello',index);
   }
 
+  
+
+
   render() {
 
     const style={
@@ -69,10 +71,23 @@ class App extends Component {
       font:'inherit',
       border:'2px solid blue',
       padding:'8px',
-      cursor:'pointer'
+      cursor:'pointer',
+      ':hover':{
+            backgroundColor:'lightgreen',
+            color:'black'
+      }
     }
 
     let persons=null
+
+    const classes=[]
+    if(this.state.persons.length<=2){
+        classes.push('red');
+    }
+    if(this.state.persons.length<1){
+      classes.push('bold');
+    }
+
 
     if(this.state.visible){
      persons=(
@@ -93,15 +108,22 @@ class App extends Component {
       }
     </div>)
     style.backgroundColor='red'
+    style[':hover']={
+        backgroundColor:'salmon',
+        color:'black'
+    }
+
     }
 
 
 
 
     return (
+      <StyleRoot>
       <div className="App">
-        <h1>Hi, I'm a React App</h1>
-        <p>This is really working!</p>
+        <h1 >Hi, I'm a React App</h1>
+        <p className={classes.join(' ')}>This is really working!</p>
+        <p >This is really working!</p>
         <button 
         style={style}
         onClick={this.onToggleListener}>Toggle Element</button>
@@ -109,12 +131,13 @@ class App extends Component {
         {persons}
 
       </div>
+      </StyleRoot>
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
-// export default App;
+export default Radium(App);
 
 //  Hooks      ------> useState
 
@@ -167,4 +190,4 @@ class App extends Component {
 
 // }
 
-export default App;
+// export default App;
