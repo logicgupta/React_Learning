@@ -1,10 +1,11 @@
-import React , {useEffect} from 'react'
+import React , {useEffect,useRef} from 'react'
 
 const cockpit=(props)=>{
 
     // Its showing Error
 
     // useEffect(()=>{
+        // toggleRef.current.click()
     //         console.log('[Cockpit.js]  useEffect');    // Error We are unable to use
     // },[]);
 
@@ -16,9 +17,10 @@ const cockpit=(props)=>{
     //     }
     // });
 
+    // const toggleRef=useRef(null);
+
 
     const classes=[]
-
     if(props.visible){
         classes.push('red');
     }
@@ -37,8 +39,13 @@ const cockpit=(props)=>{
             <p >This is really working!</p>
             <button 
             alt={props.visible}
+            //ref={toggleRef}
             onClick={props.onToggleListener}
             >Toggle Element</button>
+
+            <button
+            onClick={props.authenticate}
+            >Login</button>
         </div>
     )
 }

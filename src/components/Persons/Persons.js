@@ -1,6 +1,7 @@
 import React,{ PureComponent} from 'react';
 
 import Person from './Person/Person'
+import withClass from '../../hoc/WithClass'
 
 class Persons extends PureComponent{
  
@@ -41,6 +42,7 @@ class Persons extends PureComponent{
           click={()=>this.props.click(index)}    // Delete 
           onChangeListener={(event)=>this.props.onChange(event,pers.id)}
           key={pers.id}
+          isAuth={this.props.isAuthenticate}
           />
         )
     })
@@ -49,4 +51,4 @@ class Persons extends PureComponent{
 }
 
 
-export default Persons
+export default withClass(Persons,"App");

@@ -7,6 +7,17 @@ import Aux from '../../../hoc/Aux'
 
 class   Person extends Component{
 
+    constructor(props){
+        super(props);
+
+        this.inputElementRef=React.createRef();
+    }
+
+    componentDidMount(){
+        // this.inputElement.focus();
+        this.inputElementRef.current.focus();
+    }
+
     render(){
         const StyledDiv=styled.div`
                 width: 60%;
@@ -21,12 +32,25 @@ class   Person extends Component{
                 }
 
     `;
+    // Aux component and React.Fragment does the same so we can use anyone of them.
+    // I am using here Aux 
+    // Technically we can use <React.Fragment> because it reduces our code.
     return (
-        <Aux  >
+        <Aux  > 
+            {
+                this.props.isAuth? <p>Authenticated!</p> :<p> Please Login</p>
+            }
             <p onClick={this.props.click} >My   Name    is {this.props.name}    and Age {this.props.age}</p>
             <p>{this.props.children}</p>
-            <input  type="text" onChange={this.props.onChangeListener}/>
+            <input  
+            key="i3"
+            type="text"
+            // ref={(inputEl)=>this.inputElement=inputEl}
+            ref={this.inputElementRef}
+            onChange={this.props.onChangeListener}/>
         </Aux>
+           
+       
     )
     }
     }

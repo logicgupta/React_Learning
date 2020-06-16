@@ -5,6 +5,12 @@ import Styled from 'styled-components'
 import Persons from '../components/Persons/Persons'
 import Cockpit from '../Cockpit/Cockpit'
 
+import withClass from '../hoc/WithClass'
+
+import Aux from '../hoc/Aux'
+
+import PropTypes from 'prop-types'
+
 
                 // We use nomal css styling to Style the components in syled-component
                 const StyleButton=Styled.button`
@@ -37,7 +43,9 @@ class App extends Component {
       { id:'sssd3',name: 'Stephanie', age: 26 }
     ],
     otherState: 'some other value',
-    visible:false
+    visible:false,
+    stateCounter:0,
+    authenticate:false
   };
 
 
@@ -98,8 +106,12 @@ class App extends Component {
     const persons=[...this.state.persons];
     persons[personIndex]=person;
 
-    this.setState({
-      persons: persons
+    this.setState((prevState,props)=>
+    {
+     return{
+      persons: persons,
+      stateCounter:prevState.stateCounter+1
+     }
     });
   }
 
@@ -119,6 +131,13 @@ class App extends Component {
       console.log('Hello',index);
   }
 
+
+  authenticateHandler=()=>{
+    this.setState({
+      authenticate:true
+    });
+  }
+
   
 
 
@@ -133,6 +152,7 @@ class App extends Component {
       persons={this.state.persons}
       click={this.onDeleteListener}
       onChange={this.onChangeListener}
+      isAuthenticate={this.state.authenticate}
       >
       </Persons>
     </div>)
@@ -142,25 +162,36 @@ class App extends Component {
 
     return (
       
-      <div className="App">
+      <Aux>
         <Cockpit
         persons={this.state.persons}
         visible={this.state.visible}
         onToggleListener={this.onToggleListener}
+        authenticate={this.authenticateHandler}
         >
+
 
         </Cockpit>
 
         {persons}
 
-      </div>
+      </Aux>
      
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
-export default App;
+
+Persons.propTypes={
+  persons:PropTypes.array,
+  click:PropTypes.func,
+  onChange:PropTypes.func
+}
+
+
+
+export default withClass(App,"App");
 
 //  Hooks      ------> useState
 
