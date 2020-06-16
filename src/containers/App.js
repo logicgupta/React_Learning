@@ -2,7 +2,9 @@ import React, { Component, useState } from 'react';
 import './App.css';
 import Styled from 'styled-components'
 
-import Person from './Person/Person'
+import Persons from '../components/Persons/Persons'
+import Cockpit from '../Cockpit/Cockpit'
+
 
                 // We use nomal css styling to Style the components in syled-component
                 const StyleButton=Styled.button`
@@ -22,6 +24,12 @@ import Person from './Person/Person'
 
 
 class App extends Component {
+
+  constructor(props){
+    super(props);
+    console.log(' [App.js] constructor')
+  }
+
   state = {
     persons: [
       { id:'sssd1',name: 'Max', age: 28 },
@@ -31,6 +39,40 @@ class App extends Component {
     otherState: 'some other value',
     visible:false
   };
+
+
+  static getDerivedStateFromProps(props,state){
+
+    console.log('  [App.js]  getDerivedStateFromProps');
+    return state;
+
+  }
+
+
+  componentDidMount(){
+    console.log(' [App.js ]   componentDIDMount');
+  }
+
+
+ 
+
+  shouldComponentUpdate(nextprops,nextState){
+    console.log('[App.js] shouldComponentUpdate');
+    return true;          // If we return false then all the other component will not update .
+                          // i.e. The Toggle Button here will prevent from Display of the Per
+  }
+
+
+  componentDidUpdate(){
+
+    console.log('[App.js]  componentDidUpdate ');
+  }
+
+  componentWillUnmount(){
+    console.log(' [App.js]  Clearing the App js');
+  }
+
+
 
   switchNameHandler = (userName) => {
     // console.log('Was clicked!');
@@ -82,55 +124,33 @@ class App extends Component {
 
   render() {
     
-  
-
     let persons=null
-
-    const classes=[]
-    if(this.state.persons.length<=2){
-        classes.push('red');
-    }
-    if(this.state.persons.length<1){
-      classes.push('bold');
-    }
-
 
     if(this.state.visible){
      persons=(
       <div>
-      {
-        this.state.persons.map((pers,index)=>{
-            return(
-              <Person 
-              name={pers.name}
-              age={pers.age}
-              click={()=>this.onDeleteListener(index)}
-              onChangeListener={(event)=>this.onChangeListener(event,pers.id)}
-              key={pers.id}
-
-              />
-            );
-        })
-      }
+      <Persons
+      persons={this.state.persons}
+      click={this.onDeleteListener}
+      onChange={this.onChangeListener}
+      >
+      </Persons>
     </div>)
    
 
     }
 
-
-
-
     return (
       
       <div className="App">
-        <h1 >Hi, I'm a React App</h1>
-        <p className={classes.join(' ')}>This is really working!</p>
-        <p >This is really working!</p>
-        <StyleButton  
-        alt={this.state.visible}
-        onClick={this.onToggleListener}
-        >Toggle Element</StyleButton>
-       
+        <Cockpit
+        persons={this.state.persons}
+        visible={this.state.visible}
+        onToggleListener={this.onToggleListener}
+        >
+
+        </Cockpit>
+
         {persons}
 
       </div>
