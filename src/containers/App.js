@@ -11,6 +11,8 @@ import Aux from '../hoc/Aux'
 
 import PropTypes from 'prop-types'
 
+import AuthContext from'../context/auth-context'
+
 
                 // We use nomal css styling to Style the components in syled-component
                 const StyleButton=Styled.button`
@@ -152,7 +154,6 @@ class App extends Component {
       persons={this.state.persons}
       click={this.onDeleteListener}
       onChange={this.onChangeListener}
-      isAuthenticate={this.state.authenticate}
       >
       </Persons>
     </div>)
@@ -163,17 +164,22 @@ class App extends Component {
     return (
       
       <Aux>
+
+        <AuthContext.Provider  value={{authenticated:this.state.authenticate,
+        login:this.authenticateHandler}} >
+          
         <Cockpit
         persons={this.state.persons}
         visible={this.state.visible}
         onToggleListener={this.onToggleListener}
         authenticate={this.authenticateHandler}
         >
-
-
         </Cockpit>
 
+        
+
         {persons}
+        </AuthContext.Provider>
 
       </Aux>
      

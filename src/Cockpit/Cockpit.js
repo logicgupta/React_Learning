@@ -1,4 +1,6 @@
-import React , {useEffect,useRef} from 'react'
+import React , {useEffect,useRef,useContext} from 'react'
+
+import AuthContext from '../context/auth-context.js'
 
 const cockpit=(props)=>{
 
@@ -18,6 +20,8 @@ const cockpit=(props)=>{
     // });
 
     // const toggleRef=useRef(null);
+
+    // const authContext=useContext(AuthContext);   // Showing Error 
 
 
     const classes=[]
@@ -43,9 +47,12 @@ const cockpit=(props)=>{
             onClick={props.onToggleListener}
             >Toggle Element</button>
 
-            <button
-            onClick={props.authenticate}
-            >Login</button>
+            <AuthContext.Consumer>
+            {(context)=>   <button
+            onClick={context.login}
+            >Login</button>}
+            </AuthContext.Consumer>
+          
         </div>
     )
 }

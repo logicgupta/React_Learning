@@ -42,7 +42,7 @@ class Persons extends PureComponent{
           click={()=>this.props.click(index)}    // Delete 
           onChangeListener={(event)=>this.props.onChange(event,pers.id)}
           key={pers.id}
-          isAuth={this.props.isAuthenticate}
+      //    isAuth={this.props.isAuthenticate}
           />
         )
     })
